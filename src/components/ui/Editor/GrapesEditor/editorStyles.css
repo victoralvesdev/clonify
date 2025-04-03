@@ -1,0 +1,170 @@
+    /* src/components/ui/Editor/GrapesEditor/editorStyles.css */
+
+    /* Layout para o Editor GrapesJS - Estrutura de Painéis */
+
+    /* Container principal do editor */
+    .grapesjs-editor-container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+        overflow: hidden;
+        background-color: #121212;
+        color: #e0e0e0;
+    }
+
+    /* Linha principal que contém os painéis */
+    .editor-row {
+        display: flex;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    /* Painel esquerdo (gerenciador de blocos) */
+    .panel__left {
+        width: 240px;
+        flex-shrink: 0;
+        background-color: #1a1a1a;
+        border-right: 1px solid #333;
+        overflow-y: auto;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Container para os blocos no painel esquerdo */
+    .blocks-container {
+        padding: 5px;
+        overflow-y: auto;
+        height: 100%;
+    }
+
+    /* Área central (canvas) */
+    .editor-canvas-container {
+        flex: 1;
+        overflow: hidden;
+        position: relative;
+        background-color: #121212;
+    }
+
+    /* Painel direito (estilo, camadas, atributos) */
+    .panel__right {
+        width: 280px;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: column;
+        background-color: #1a1a1a;
+        border-left: 1px solid #333;
+        position: relative;
+    }
+
+    /* Áreas específicas no painel direito */
+    .styles-container,
+    .traits-container,
+    .layers-container {
+        flex: 1;
+        overflow-y: auto;
+        padding: 10px 5px;
+    }
+
+    /* Estilos para a área de canvas do GrapesJS */
+    #gjs-editor {
+        height: 100%;
+        width: 100%;
+    }
+
+    /* Ajustes para responsividade */
+    @media (max-width: 768px) {
+        .panel__left {
+            width: 200px;
+        }
+
+        .panel__right {
+            width: 250px;
+        }
+    }
+
+    /* Melhorar a visualização dos blocos */
+    .gjs-block {
+        margin: 10px 5px;
+        padding: 15px 10px;
+        min-height: 90px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        text-align: center;
+        transition: all 0.2s ease;
+    }
+
+    .gjs-block:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Ícones dos blocos */
+    .gjs-block svg {
+        margin-bottom: 8px;
+    }
+
+    /* Estilização para categorias */
+    .gjs-block-category {
+        padding: 5px 0;
+        border-bottom: 1px solid #333;
+    }
+
+    .gjs-block-category-title {
+        font-weight: 600;
+        padding: 10px;
+        cursor: pointer;
+        color: #e0e0e0;
+        background-color: #242424;
+        border-radius: 4px;
+        margin: 5px;
+    }
+
+    /* Estilo para ícones dos blocos */
+    .gjs-block-label svg {
+        color: #e0e0e0;
+    }
+
+    /* Estilo para o label do bloco */
+    .gjs-block-label {
+        font-size: 12px;
+        line-height: 1.2;
+        font-weight: 500;
+        margin-top: 8px;
+        color: #e0e0e0;
+    }
+
+    /* Destaque para o bloco quando hover */
+    .gjs-block:hover .gjs-block-label {
+        color: 6a05ad;
+    }
+
+    /* Ajustar espaçamento entre categorias */
+    .gjs-block-categories {
+        padding: 5px;
+    }
+
+    /* Tornar os blocos mais distintos */
+    .gjs-block {
+        border-radius: 4px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Destaque visual quando bloco é clicado */
+    .gjs-block:active {
+        transform: scale(0.98);
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Estilos para os botões de comando no painel */
+    .gjs-pn-views {
+        padding: 5px;
+        background-color: #1a1a1a;
+    }
+
+    .gjs-pn-views .gjs-pn-btn {
+        margin: 2px;
+        padding: 8px 15px;
+        border-radius: 3px;
+    }

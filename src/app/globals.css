@@ -1,0 +1,383 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 231 91% 3%;
+    --foreground: 0 0% 98%;
+
+    --card: 234 29% 45%;
+    --card-foreground: 0 0% 98%;
+ 
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --primary-light: 0 0% 100%;
+ 
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+ 
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+ 
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+ 
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --neutral: 0 0% 100%;
+ 
+    --radius: 0.5rem;
+ 
+    --chart-1: 12 76% 61%;
+ 
+    --chart-2: 173 58% 39%;
+ 
+    --chart-3: 197 37% 24%;
+ 
+    --chart-4: 43 74% 66%;
+ 
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+ 
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+ 
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+ 
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+ 
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+ 
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+ 
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+ 
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+ 
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+ 
+    --ring: 0 0% 83.1%;
+ 
+    --chart-1: 220 70% 50%;
+ 
+    --chart-2: 160 60% 45%;
+ 
+    --chart-3: 30 80% 55%;
+ 
+    --chart-4: 280 65% 60%;
+ 
+    --chart-5: 340 75% 55%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-[#1F1483] text-foreground;
+    background-image: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(31, 20, 131, 0.9) 100%
+    );
+  }
+}
+
+@layer components {
+  .text-primary-light {
+    @apply text-[hsl(var(--primary-light))];
+  }
+  
+  .container {
+    @apply w-full px-4;
+    max-width: 100% !important;
+  }
+
+  .content-container {
+    @apply mx-auto;
+    max-width: 1920px;
+  }
+
+  .progress-bar {
+    @apply h-1 bg-[hsl(var(--primary)/0.2)] rounded-full overflow-hidden;
+  }
+
+  .progress-bar-fill {
+    @apply h-full bg-gradient-to-r from-[#8A63F4] to-[#a47ef8] transition-all duration-500 ease-in-out;
+  }
+
+  .btn-action {
+    @apply inline-flex items-center gap-2 px-3 py-2 rounded-lg bg-[hsl(var(--secondary))] hover:bg-gradient-to-r hover:from-[#8A63F4] hover:to-[#a47ef8] text-[hsl(var(--secondary-foreground))] transition-all duration-300 text-sm;
+  }
+
+  .btn-action-text {
+    @apply hidden lg:inline;
+  }
+
+  .preview-frame {
+    @apply w-full bg-background rounded-lg border border-[hsl(var(--border))] overflow-hidden;
+    min-height: calc(100vh - 14rem);
+  }
+
+  .editor-modal {
+    @apply w-[90%] max-w-[400px];
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-r from-[#8A63F4] to-[#a47ef8];
+  }
+
+  .hover-gradient-primary {
+    @apply hover:bg-gradient-to-r hover:from-[#8A63F4] hover:to-[#a47ef8] transition-all duration-300;
+  }
+}
+
+/* Estilos para os passos de clonagem */
+.step-indicator {
+  @apply flex items-center justify-center;
+}
+
+.step-number {
+  @apply w-10 h-10 rounded-full flex items-center justify-center text-white font-semibold;
+}
+
+.step-line {
+  @apply w-32 h-1 transition-colors duration-300;
+}
+
+.step-active {
+  @apply bg-blue-500;
+}
+
+.step-inactive {
+  @apply bg-gray-700;
+}
+
+/* Estilos para o preview do site */
+.preview-container {
+  @apply bg-white rounded-lg overflow-hidden transition-all;
+}
+
+.preview-mobile {
+  @apply max-w-sm mx-auto;
+}
+
+.preview-desktop {
+  @apply w-full;
+}
+
+/* Estilos para os botões de ação */
+.action-buttons {
+  @apply flex gap-2;
+}
+
+.action-button {
+  @apply flex items-center gap-2 px-4 py-2 rounded-lg transition-colors;
+}
+
+/* Estilos para o modo de edição */
+.edit-mode {
+  @apply bg-gray-900 text-white;
+}
+
+.edit-mode-header {
+  @apply border-b border-gray-800 p-4;
+}
+
+.edit-mode-content {
+  @apply container mx-auto py-6 px-4;
+}
+
+/* Scroll suave e invisível */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Esconder barra de rolagem em todos os elementos, mantendo a funcionalidade */
+* {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+/* Esconder barra de rolagem em WebKit (Chrome, Safari, etc) */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Estilo específico para containers com rolagem */
+.content-container,
+.overflow-auto,
+.overflow-y-auto {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch; /* Rolagem suave no iOS */
+}
+
+/* Estilo para rolagem suave em todos os elementos com overflow */
+.content-container,
+.overflow-auto,
+.overflow-y-auto {
+  scroll-behavior: smooth;
+}
+
+/* Estilos para ocupar a tela inteira */
+.full-height-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.preview-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+}
+
+iframe {
+  width: 100%;
+  height: auto;
+  min-height: 500px;
+  border: none;
+  display: block;
+}
+
+/* Estilos para o CKEditor */
+.ck-editor-container {
+  width: 100%;
+}
+
+.ck-editor__editable {
+  min-height: 200px !important;
+  max-height: 500px;
+  overflow-y: auto !important;
+  color: #000 !important;
+  background-color: #fff !important;
+}
+
+.ck.ck-editor__editable:not(.ck-editor__nested-editable).ck-focused {
+  border: 1px solid #8A63F4 !important;
+  box-shadow: 0 0 0 2px rgba(138, 99, 244, 0.2) !important;
+}
+
+.ck.ck-button.ck-on,
+.ck.ck-button:active {
+  background-color: rgba(138, 99, 244, 0.1) !important;
+  border-color: #8A63F4 !important;
+}
+
+.ck.ck-dropdown .ck-dropdown__panel {
+  background-color: #fff !important;
+  border: 1px solid #ddd !important;
+  max-height: 300px !important;
+  overflow-y: auto !important;
+  z-index: 9999 !important;
+}
+
+/* Estilos para o editor de elementos */
+.editor-sidebar {
+  background-color: #1A1D2A !important;
+  color: white !important;
+  border-left: 1px solid #2D3748 !important;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  height: 100% !important;
+  width: 320px !important;
+  z-index: 50 !important;
+  position: absolute !important;
+  right: 0 !important;
+  top: 0 !important;
+  box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5) !important;
+}
+
+.editor-container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editor-iframe {
+  border: 2px solid transparent !important;
+  transition: border-color 0.3s ease;
+}
+
+.editor-iframe:focus-visible {
+  outline: none;
+  border-color: #8A63F4 !important;
+}
+
+.editor-selected {
+  outline: 2px solid #8A63F4 !important;
+  outline-offset: 2px !important;
+  position: relative;
+  z-index: 5;
+}
+
+/* Estilos adicionais para melhorar contraste */
+.editor-container button {
+  color: white !important;
+}
+
+.editor-container h2, 
+.editor-container h3, 
+.editor-container label,
+.editor-container span {
+  color: white !important;
+}
+
+.editor-container .bg-\[\#1A1D2A\] button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Melhorar visualização do editor de elementos */
+.editor-sidebar button,
+.editor-sidebar span,
+.editor-sidebar label,
+.editor-sidebar h2 {
+  color: white !important;
+}
+
+/* Ajustes de responsividade para o editor */
+@media (max-width: 768px) {
+  .editor-sidebar {
+    position: fixed;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    max-width: 320px;
+    transform: translateX(0);
+    transition: transform 0.3s ease;
+  }
+}
+
+/* Efeito Glass */
+.glass-effect {
+  background: rgba(82, 81, 150, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(31, 20, 131, 0.2);
+} 
