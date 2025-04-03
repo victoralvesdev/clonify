@@ -1,8 +1,8 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const SESSION_TOKEN = 'eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIn0..Tckie5ywj8KIjlIb._7KaIXNYY9RkFUbxXCnIWqObgkFoSxMKnwpbqciNN5z8DmWP-iH5vPwHQo90u6RCLW5bvyFfa9IoCHfFElEo9W2ImtRjjwRCJNhqIHXvtehLVnLz1KvEzBDBr7MTY3GG7JMzgg9SHHXadlrCxuE7ov-YYiP70MfQN7SmvZMgaFUWTvMuIBwELBgC324B0TxM7fkIEwJRfQwjyD5WiXFgSA-sKwz1Te-St4l59iNqr6liMo_1lC-nbgyrU0nc4Gst6L0Z2BkRNqAB6A.dVXDrjKJiPJpMd_H4jvMgQ';
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   try {
     const { 
       keyword, 

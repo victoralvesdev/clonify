@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { WebScraper } from '@/services/clone/scraper';
 import { CacheConfig } from '@/services/cache/assetCache';
 import path from 'path';
@@ -7,7 +7,7 @@ const cacheConfig: CacheConfig = {
   directory: path.join(process.cwd(), 'public', 'cache')
 };
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   let scraper: WebScraper | null = null;
 
   try {

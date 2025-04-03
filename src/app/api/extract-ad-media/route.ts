@@ -1,4 +1,4 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import puppeteer, { ResourceType } from 'puppeteer';
 import { mediaCache } from '@/services/mediaCache';
 
@@ -23,7 +23,7 @@ interface PuppeteerError extends Error {
   stack?: string;
 }
 
-export async function POST(request: Request) {
+export async function POST(request: NextRequest) {
   let browser;
   
   try {

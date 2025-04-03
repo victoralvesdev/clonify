@@ -1,13 +1,13 @@
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { join } from 'path';
 import fs from 'fs/promises';
 
 export async function GET(
-  request: Request,
-  { params }: { params: { path: string[] } }
+  request: NextRequest,
+  context: { params: { path: string[] } }
 ) {
   try {
-    const filePath = join(process.cwd(), 'public', 'cache', ...params.path);
+    const filePath = join(process.cwd(), 'public', 'cache', ...context.params.path);
     
     // Verificar se o arquivo existe
     try {
