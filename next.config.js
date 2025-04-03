@@ -62,13 +62,20 @@ const nextConfig = {
       },
     ];
   },
-  experimental: {
-    serverActions: true,
-  },
   webpack: (config, { isServer }) => {
     if (isServer) {
-      config.externals = [...config.externals, 'puppeteer'];
+      config.externals = [...config.externals, 'puppeteer', 'undici'];
     }
+    
+    // Adiciona regra para lidar com módulos ESM
+    config.module.rules.push({
+      test: /\.m?js$/,
+      type: 'javascript/auto',
+      resolve: {
+        fullySpecified: false,
+      },
+    });
+
     return config;
   },
 };

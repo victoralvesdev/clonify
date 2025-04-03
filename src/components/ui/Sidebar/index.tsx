@@ -27,18 +27,35 @@ type SidebarContextType = {
 
 export const SidebarContext = createContext<SidebarContextType>({ isHovered: false });
 
-export function Sidebar({ children }: { children: React.ReactNode }) {
+interface SidebarProps {
+  children: React.ReactNode;
+  open?: boolean;
+  setOpen?: (open: boolean) => void;
+}
+
+export function Sidebar({ children, open, setOpen }: SidebarProps) {
   const [isHovered, setIsHovered] = useState(false);
+  const sidebarOpen = open ?? isHovered;
+
+  const handleMouseEnter = () => {
+    setIsHovered(true);
+    setOpen?.(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsHovered(false);
+    setOpen?.(false);
+  };
 
   return (
-    <SidebarContext.Provider value={{ isHovered }}>
+    <SidebarContext.Provider value={{ isHovered: sidebarOpen }}>
       <div
         className={cn(
           "h-screen bg-[#0A0D1F] border-r border-[#1e2235] transition-all duration-300 ease-in-out relative group fixed top-0 left-0 z-40",
-          isHovered ? "w-64" : "w-[68px]"
+          sidebarOpen ? "w-64" : "w-[68px]"
         )}
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
       >
         {children}
       </div>
