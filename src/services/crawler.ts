@@ -119,7 +119,7 @@ const detectTechnologies = (html: string): { technologies: string[], incompatibl
 };
 
 // URL da API do Backend (ler da variável de ambiente ou usar default)
-const BACKEND_API_URL = process.env.NEXT_PUBLIC_BACKEND_API_URL || 'http://localhost:3001/api/crawl';
+const BACKEND_API_URL = '/api/crawler';
 
 interface CrawlResult {
     html: string;
@@ -129,22 +129,31 @@ interface CrawlResult {
 }
 
 export const crawlPage = async (targetUrl: string): Promise<CrawlResult> => {
-    console.log(`[Frontend] Solicitando clonagem para: ${targetUrl} via backend ${BACKEND_API_URL}`);
+    console.log(`[Frontend] Solicitando clonagem para: ${targetUrl}`);
     try {
-        const response = await axios.post<{ html: string }>(BACKEND_API_URL, {
-            url: targetUrl,
-        }, {
-          timeout: 120000 // Timeout no frontend (ex: 120s) - deve ser maior que o do backend
+        const response = await fetch(BACKEND_API_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ url: targetUrl }),
         });
 
-        if (!response.data || !response.data.html) {
-          throw new Error('Resposta do backend inválida ou sem HTML.');
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.error || `Erro do servidor: ${response.status}`);
         }
 
-        const processedHtml = response.data.html;
-        console.log(`[Frontend] HTML recebido do backend (Tamanho: ${processedHtml.length}).`);
+        const data = await response.json();
 
-        // Manter a lógica existente de extração de CSS e tecnologias a partir do HTML recebido
+        if (!data || !data.html) {
+            throw new Error('Resposta da API inválida ou sem HTML.');
+        }
+
+        const processedHtml = data.html;
+        console.log(`[Frontend] HTML recebido da API (Tamanho: ${processedHtml.length}).`);
+
+        // Extrair CSS e tecnologias a partir do HTML recebido
         const css = await extractCss(processedHtml, targetUrl); 
         const { technologies, incompatibleTechnologies } = detectTechnologies(processedHtml); 
 
@@ -157,20 +166,8 @@ export const crawlPage = async (targetUrl: string): Promise<CrawlResult> => {
             incompatibleTechnologies: incompatibleTechnologies,
         };
     } catch (error: any) {
-        console.error('[Frontend] Erro ao chamar API de clonagem do backend:', error);
-        let errorMessage = 'Falha ao clonar a página via backend.';
-        if (axios.isAxiosError(error)) {
-            if (error.code === 'ECONNABORTED') {
-                errorMessage = 'Tempo limite excedido ao conectar ao serviço de clonagem. Verifique se o backend está rodando ou se o site alvo está demorando muito para carregar.';
-            } else if (error.response) {
-              // Tenta pegar a mensagem de erro específica do backend
-              errorMessage = error.response.data?.error || error.response.data?.details || `Erro do servidor: ${error.response.status}`;
-            }
-        } else if (error.message) {
-          errorMessage = error.message;
-        }
-        console.error(`[Frontend] Erro final: ${errorMessage}`);
-        throw new Error(errorMessage);
+        console.error('[Frontend] Erro ao chamar API de clonagem:', error);
+        throw new Error(error.message || 'Falha ao clonar a página');
     }
 };
 
