@@ -2,15 +2,9 @@ import { NextRequest, NextResponse } from 'next/server';
 import { join } from 'path';
 import fs from 'fs/promises';
 
-type RouteContext = {
-  params: {
-    path: string[];
-  };
-};
-
 export async function GET(
   request: NextRequest,
-  { params }: RouteContext
+  { params }: { params: { path: string[] } }
 ) {
   try {
     const filePath = join(process.cwd(), 'public', 'cache', ...params.path);
