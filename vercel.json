@@ -1,11 +1,15 @@
 {
   "version": 2,
-  "buildCommand": "npm run build",
-  "devCommand": "npm run dev",
+  "buildCommand": "next build",
+  "devCommand": "next dev",
   "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["gru1"],
   "env": {
     "NEXT_PUBLIC_RAPIDAPI_KEY": "1cff79496cmshd22401535cd57a1p1f7025jsnac69d8edc0f6",
     "NEXT_PUBLIC_RAPIDAPI_URL": "https://ad-libraries.p.rapidapi.com",
-    "NEXT_PUBLIC_RAPIDAPI_HOST": "ad-libraries.p.rapidapi.com"
+    "NEXT_PUBLIC_RAPIDAPI_HOST": "ad-libraries.p.rapidapi.com",
+    "PUPPETEER_SKIP_CHROMIUM_DOWNLOAD": "true",
+    "CHROME_EXECUTABLE_PATH": "/usr/bin/chromium-browser"
   }
 } 
