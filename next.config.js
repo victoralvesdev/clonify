@@ -79,6 +79,16 @@ const nextConfig = {
       },
     });
 
+    // Adiciona regra específica para o módulo undici
+    config.module.rules.push({
+      test: /node_modules\/undici\/.*\.js$/,
+      loader: 'babel-loader',
+      options: {
+        presets: ['@babel/preset-env'],
+        plugins: ['@babel/plugin-transform-class-properties']
+      }
+    });
+
     return config;
   }
 };
