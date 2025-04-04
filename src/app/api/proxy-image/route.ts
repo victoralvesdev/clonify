@@ -4,28 +4,31 @@ import { NextRequest, NextResponse } from 'next/server';
 export const runtime = 'edge';
 export const dynamic = 'force-dynamic';
 
+// Função auxiliar para verificar se uma URL é válida
+function isValidUrl(urlString: string): boolean {
+  try {
+    new URL(urlString);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// Função auxiliar para verificar se é uma imagem
+function isImageUrl(url: string): boolean {
+  const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
+  return imageExtensions.some(ext => url.toLowerCase().endsWith(`.${ext}`));
+}
+
 export async function GET(request: NextRequest) {
   try {
     const imageUrl = request.nextUrl.searchParams.get('url');
 
-    if (!imageUrl) {
-      return new NextResponse('URL não fornecida', { status: 400 });
+    if (!imageUrl || !isValidUrl(imageUrl)) {
+      return new NextResponse('URL inválida ou não fornecida', { status: 400 });
     }
 
-    // Validar se a URL é válida
-    try {
-      new URL(imageUrl);
-    } catch (error) {
-      return new NextResponse('URL inválida', { status: 400 });
-    }
-
-    // Validar se a URL aponta para uma imagem (simplificado)
-    const imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
-    const hasValidExtension = imageExtensions.some(ext => 
-      imageUrl.toLowerCase().endsWith(`.${ext}`)
-    );
-
-    if (!hasValidExtension) {
+    if (!isImageUrl(imageUrl)) {
       return new NextResponse('URL não aponta para uma imagem', { status: 400 });
     }
 
@@ -40,7 +43,7 @@ export async function GET(request: NextRequest) {
     }
 
     const contentType = response.headers.get('content-type');
-    if (!contentType || !contentType.startsWith('image/')) {
+    if (!contentType?.startsWith('image/')) {
       return new NextResponse('Tipo de conteúdo inválido', { status: 400 });
     }
 
@@ -53,7 +56,7 @@ export async function GET(request: NextRequest) {
         'Access-Control-Allow-Origin': '*'
       }
     });
-  } catch (error) {
+  } catch {
     return new NextResponse('Erro ao processar imagem', { status: 500 });
   }
 } 
