@@ -1,9 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// Configurar opções de cache e revalidação
+export const dynamic = 'force-dynamic';
+export const revalidate = 3600; // 1 hora
+
 export async function GET(request: NextRequest) {
   try {
-    const url = new URL(request.url);
-    const imageUrl = url.searchParams.get('url');
+    // Usar searchParams diretamente do request
+    const imageUrl = request.nextUrl.searchParams.get('url');
 
     if (!imageUrl) {
       console.error('URL não fornecida');
@@ -19,7 +23,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Validar se a URL aponta para uma imagem
-    if (!/\.(jpg|jpeg|png|gif|webp)$/i.test(imageUrl)) {
+    if (!/\.(jpg|jpeg|png|gif|webp|svg)$/i.test(imageUrl)) {
       console.error('URL não aponta para uma imagem:', imageUrl);
       return new NextResponse('URL não aponta para uma imagem', { status: 400 });
     }
@@ -28,6 +32,9 @@ export async function GET(request: NextRequest) {
     const response = await fetch(imageUrl, {
       headers: {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+      },
+      next: {
+        revalidate: 3600 // Cache por 1 hora
       }
     });
     
@@ -47,7 +54,7 @@ export async function GET(request: NextRequest) {
     return new NextResponse(buffer, {
       headers: {
         'Content-Type': contentType,
-        'Cache-Control': 'public, max-age=3600',
+        'Cache-Control': 'public, max-age=3600, s-maxage=3600, stale-while-revalidate=86400',
         'Access-Control-Allow-Origin': '*'
       }
     });
