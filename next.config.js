@@ -79,19 +79,8 @@ const nextConfig = {
       },
     });
 
-    // Adiciona regra específica para o undici
-    config.module.rules.push({
-      test: /undici\/lib\/web\/fetch\/util\.js$/,
-      loader: 'string-replace-loader',
-      options: {
-        search: 'globalThis.Blob',
-        replace: 'Blob',
-      },
-    });
-
     return config;
-  },
-  transpilePackages: ['undici']
+  }
 };
 
 module.exports = nextConfig; 

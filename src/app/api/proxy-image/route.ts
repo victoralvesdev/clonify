@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 
 // Configurar opções de runtime
 export const runtime = 'edge';
-export const dynamic = 'force-dynamic';
 
 // Função auxiliar para verificar se uma URL é válida
 function isValidUrl(urlString: string): boolean {
@@ -25,11 +24,11 @@ export async function GET(request: NextRequest) {
     const imageUrl = request.nextUrl.searchParams.get('url');
 
     if (!imageUrl || !isValidUrl(imageUrl)) {
-      return new NextResponse('URL inválida ou não fornecida', { status: 400 });
+      return new Response('URL inválida ou não fornecida', { status: 400 });
     }
 
     if (!isImageUrl(imageUrl)) {
-      return new NextResponse('URL não aponta para uma imagem', { status: 400 });
+      return new Response('URL não aponta para uma imagem', { status: 400 });
     }
 
     const response = await fetch(imageUrl, {
@@ -39,17 +38,17 @@ export async function GET(request: NextRequest) {
     });
     
     if (!response.ok) {
-      return new NextResponse('Falha ao buscar imagem', { status: response.status });
+      return new Response('Falha ao buscar imagem', { status: response.status });
     }
 
     const contentType = response.headers.get('content-type');
     if (!contentType?.startsWith('image/')) {
-      return new NextResponse('Tipo de conteúdo inválido', { status: 400 });
+      return new Response('Tipo de conteúdo inválido', { status: 400 });
     }
 
     const buffer = await response.arrayBuffer();
 
-    return new NextResponse(buffer, {
+    return new Response(buffer, {
       headers: {
         'Content-Type': contentType,
         'Cache-Control': 'public, max-age=3600',
@@ -57,6 +56,6 @@ export async function GET(request: NextRequest) {
       }
     });
   } catch {
-    return new NextResponse('Erro ao processar imagem', { status: 500 });
+    return new Response('Erro ao processar imagem', { status: 500 });
   }
 } 
