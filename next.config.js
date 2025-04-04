@@ -1,6 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  experimental: {
+    serverActions: true,
+  },
   images: {
     domains: ['*'],
     remotePatterns: [
@@ -64,7 +67,7 @@ const nextConfig = {
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
-      config.externals = [...config.externals, 'puppeteer', 'undici'];
+      config.externals = [...config.externals, 'puppeteer'];
     }
     
     // Adiciona regra para lidar com módulos ESM
